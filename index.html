@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>SIDE B · 心事唱片行</title>
+<meta name="description" content="a record for your feelings — 把一句心情，刻成一张只属于你的唱片。" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Cormorant+Garamond:ital,wght@0,500;1,500&family=Noto+Serif+SC:wght@400;600;700&family=Long+Cang&family=Caveat:wght@500;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<div class="grain"></div>
+
+<!-- ============ HERO ============ -->
+<section id="hero" class="hero">
+  <div class="hero-vinyl" aria-hidden="true">
+    <div class="disc">
+      <div class="disc-grooves"></div>
+      <div class="disc-label"><span>SIDE</span><b>B</b></div>
+    </div>
+  </div>
+
+  <div class="hero-text">
+    <p class="kicker">a record for your feelings.</p>
+    <h1 class="logo">SIDE&nbsp;B</h1>
+    <h2 class="sub">心事唱片行</h2>
+    <p class="intro">
+      这里没有畅销榜，只有此刻的你。<br />
+      写下一句心情，或挑一种情绪，<br />
+      我们替你把今天，刻成一张只属于你的唱片。
+    </p>
+    <button id="startBtn" class="btn-primary">开始刻录 →</button>
+    <p class="hint">无需登录 · 无需付费 · 一张虚拟唱片，一段真实旋律</p>
+  </div>
+
+  <div class="scroll-cue" aria-hidden="true">↓</div>
+</section>
+
+<!-- ============ STUDIO ============ -->
+<section id="studio" class="studio" hidden>
+  <div class="studio-head">
+    <button id="backBtn" class="btn-ghost" title="返回首页">← 返回</button>
+    <div class="studio-title">
+      <span class="st-small">SIDE B</span>
+      <span class="st-big">刻录台</span>
+    </div>
+    <div style="width:64px"></div>
+  </div>
+
+  <!-- 输入区 -->
+  <div class="compose">
+    <label class="field-label" for="moodInput">写下一句此刻的心情</label>
+    <textarea id="moodInput" class="mood-input" rows="2" maxlength="60"
+      placeholder="例如：今天的晚风，让我想起一个人……"></textarea>
+
+    <div class="emo-row" id="emoRow">
+      <span class="emo-label">或选一种情绪</span>
+      <button class="emo-chip" data-emo="心动">心动</button>
+      <button class="emo-chip" data-emo="想念">想念</button>
+      <button class="emo-chip" data-emo="自由">自由</button>
+      <button class="emo-chip" data-emo="遗憾">遗憾</button>
+    </div>
+
+    <button id="burnBtn" class="btn-primary block">🎚 刻录我的唱片</button>
+  </div>
+
+  <!-- 结果区 -->
+  <div class="result" id="result" hidden>
+    <div class="cover-wrap">
+      <div id="cover" class="cover tpl-cream emo-心动">
+        <!-- 装饰层（按模板变化） -->
+        <div class="deco"></div>
+
+        <!-- 文字内容 -->
+        <div class="c-wordmark">
+          <span class="c-logo">SIDE&nbsp;B</span>
+          <span class="c-sub">a record for your feelings.</span>
+        </div>
+
+        <div class="c-title-block">
+          <div class="c-title" id="cTitle" contenteditable="true" spellcheck="false">未命名唱片</div>
+          <div class="c-artist" id="cArtist" contenteditable="true" spellcheck="false">SIDE B RECORDS</div>
+        </div>
+
+        <div class="c-tracks" id="cTracks"></div>
+
+        <div class="c-message" id="cMessage" contenteditable="true" spellcheck="false"></div>
+
+        <div class="c-emo-tag" id="cEmoTag">心动</div>
+
+        <!-- 黑胶（播放键） -->
+        <button class="c-vinyl" id="playBtn" aria-label="播放/暂停">
+          <span class="vinyl-disc">
+            <span class="vinyl-grooves"></span>
+            <span class="vinyl-label"><span class="tri"></span></span>
+          </span>
+        </button>
+
+        <!-- 贴纸层 -->
+        <div class="sticker-layer" id="stickerLayer"></div>
+      </div>
+    </div>
+
+    <!-- 工具条 -->
+    <div class="tools">
+      <div class="tool-group">
+        <span class="tool-label">封面模板</span>
+        <div class="tpl-switch">
+          <button class="tpl-btn active" data-tpl="cream">奶油</button>
+          <button class="tpl-btn" data-tpl="midnight">深夜</button>
+          <button class="tpl-btn" data-tpl="journal">手账</button>
+        </div>
+      </div>
+
+      <div class="tool-group">
+        <span class="tool-label">贴纸（点击添加，可拖动 / 双击删除）</span>
+        <div class="sticker-tray" id="stickerTray"></div>
+      </div>
+
+      <div class="tool-actions">
+        <button id="shuffleBtn" class="btn-soft">🎲 随机一张</button>
+        <button id="saveBtn" class="btn-primary">💾 保存我的唱片</button>
+      </div>
+      <p class="save-note" id="saveNote" hidden></p>
+    </div>
+  </div>
+
+  <!-- 空状态 -->
+  <div class="empty-state" id="emptyState">
+    <div class="empty-vinyl"><span></span></div>
+    <p>写下心情，或挑一种情绪，<br />点击「刻录我的唱片」开始。</p>
+  </div>
+</section>
+
+<script src="script.js"></script>
+</body>
+</html>
